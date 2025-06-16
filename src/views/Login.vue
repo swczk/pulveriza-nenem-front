@@ -72,15 +72,33 @@ const handleLogin = async () => {
   loading.value = true
   error.value = ''
 
+  console.log('🎯 Login form - iniciando processo...')
+  console.log('📧 Email do form:', email.value)
+
   try {
     await authStore.login({
       email: email.value,
       password: password.value
     })
 
+    console.log('✅ Login form - sucesso! Redirecionando...')
     router.push('/')
   } catch (err) {
-    error.value = 'Email ou senha inválidos'
+    console.error('❌ Login form - erro capturado:')
+    console.error('🔢 Status do erro:', err.response?.status)
+    console.error('📄 Dados do erro:', err.response?.data)
+    console.error('🛠️ Erro completo:', err)
+    
+    // Mostrar erro mais específico baseado no status
+    if (err.response?.status === 401) {
+      error.value = 'Email ou senha inválidos'
+    } else if (err.response?.status === 500) {
+      error.value = 'Erro interno do servidor. Tente novamente.'
+    } else if (err.code === 'ECONNREFUSED' || err.message.includes('Network Error')) {
+      error.value = 'Não foi possível conectar ao servidor. Verifique se o backend está rodando.'
+    } else {
+      error.value = `Erro: ${err.response?.data?.message || err.message || 'Erro desconhecido'}`
+    }
   } finally {
     loading.value = false
   }

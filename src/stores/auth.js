@@ -18,10 +18,23 @@ export const useAuthStore = defineStore('auth', {
    actions: {
       async login(credentials) {
          try {
+            console.log('🔐 Tentando fazer login...')
+            console.log('📧 Email:', credentials.email)
+            console.log('🌐 Base URL da API:', api.defaults.baseURL)
+            console.log('📋 Payload enviado:', {
+               username: credentials.email,
+               password: '***'
+            })
+
             const response = await api.post('/auth/login', {
                username: credentials.email,
                password: credentials.password
             })
+
+            console.log('✅ Login bem-sucedido!')
+            console.log('📄 Response status:', response.status)
+            console.log('📄 Response headers:', response.headers)
+            console.log('📄 Response data:', response.data)
 
             this.token = response.data.token
             this.refreshToken = response.data.refreshToken
@@ -38,6 +51,13 @@ export const useAuthStore = defineStore('auth', {
 
             return response.data
          } catch (error) {
+            console.error('❌ Erro no login:')
+            console.error('🔢 Status:', error.response?.status)
+            console.error('📄 Headers:', error.response?.headers)
+            console.error('📄 Data:', error.response?.data)
+            console.error('🌐 URL completa:', error.config?.url)
+            console.error('📋 Payload enviado:', error.config?.data)
+            console.error('🛠️ Erro completo:', error)
             throw error
          }
       },
