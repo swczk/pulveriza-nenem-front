@@ -1,15 +1,19 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3.0 + Vite" />
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { useAuthStore } from './stores/auth'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  setup() {
+    const authStore = useAuthStore()
+
+    // Initialize auth on app start
+    authStore.initializeAuth()
   }
 }
 </script>
