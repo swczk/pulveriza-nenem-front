@@ -69,7 +69,7 @@ frontend/
 ```bash
 # Clone o repositório
 git clone <repo-url>
-cd pulveriza-nenem/frontend
+cd spray/frontend
 
 # Instale as dependências
 npm install
