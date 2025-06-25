@@ -6,7 +6,6 @@ pipeline {
 		DOCKER_IMAGE_NAME = 'swczk/spray-frontend'
 		GIT_BRANCH = 'main'
 		GIT_REPO_URL = 'https://github.com/swczk/spray-frontend.git'
-		DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
 	}
 
 	stages {
@@ -25,7 +24,7 @@ pipeline {
 		stage('Push to Docker Hub') {
 			steps {
 				script {
-					docker.withRegistry("${DOCKER_REGISTRY_URL}", 'dockerhub-credentials') {
+					docker.withRegistry('', 'dockerhub-credentials') {
 						docker.image("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}").push()
 						docker.image("${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}").tag("${DOCKER_IMAGE_NAME}:latest")
 						docker.image("${DOCKER_IMAGE_NAME}:latest").push()
