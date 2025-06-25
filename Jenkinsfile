@@ -6,7 +6,7 @@ pipeline {
 		DOCKER_IMAGE_NAME = 'swczk/spray-frontend'
 		GIT_BRANCH = 'main'
 		GIT_REPO_URL = 'https://github.com/swczk/spray-frontend.git'
-		DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
+		DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
 	}
 
 	stages {
